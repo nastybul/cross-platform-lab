@@ -1,0 +1,17 @@
+# Залежності
+node_modules/
+
+# Збірки Electron / Vite
+dist/
+build/
+
+# Налаштування середовища розробки
+.idea/
+.vscode/
+
+# Логи та системні файли
+npm-debug.*
+yarn-debug.*
+yarn-error.*
+.DS_Store
+Thumbs.db
