@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DentalClinic — Стоматологічна клініка</title>
+  <link rel="stylesheet" href="style.css">
+  <script defer src="script.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <header class="header">
+    <div class="container header-container">
+      <div class="logo">
+        <span class="logo-icon">🦷</span>
+        <div class="logo-text">
+          <h1>DentalClinic</h1>
+          <p>Стоматологічна клініка</p>
+        </div>
+      </div>
+      <button class="btn btn-primary" id="open-booking-btn">Записатися на прийом</button>
+    </div>
+  </header>
+
+  <main class="main">
+    <div class="container">
+
+      <section class="section about-section">
+        <h2 class="section-title">Про застосунок та основні функції</h2>
+        <p class="section-desc">
+          Вебзастосунок <strong>DentalClinic</strong> призначений для зручного та швидкого онлайн-запису пацієнтів на прийом до стоматолога, ознайомлення з каталогом послуг та вибору відповідного спеціаліста.
+        </p>
+        <div class="features-grid">
+          <div class="feature-card">
+            <div class="feature-icon">📋</div>
+            <h3>Динамічний каталог</h3>
+            <p>Зручна фільтрація послуг за категоріями з деталізацією цін та описів процедур.</p>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon">👨‍⚕️</div>
+            <h3>Смарт-вибір лікаря</h3>
+            <p>Автоматичний фільтр лікарів відповідно до обраної послуги та її специфіки.</p>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon">📅</div>
+            <h3>Бронювання часу</h3>
+            <p>Вибір зручної дати й доступного часу з автооновленням зайнятих годин.</p>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon">🔔</div>
+            <h3>Управління записами</h3>
+            <p>Перегляд деталей призначеного прийому та можливість скасування в один клік.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="section catalog-section">
+        <h2 class="section-title">Каталог послуг</h2>
+        <p class="section-desc">Оберіть категорію, щоб переглянути доступні процедури, їх вартість та опис:</p>
+
+        <div class="categories-filter" id="categories-filter">
+          <button class="filter-btn active" data-category="all">Усі послуги</button>
+          <button class="filter-btn" data-category="therapy">Терапія</button>
+          <button class="filter-btn" data-category="orthodontics">Ортодонтія</button>
+          <button class="filter-btn" data-category="hygiene">Чистка та відбілювання</button>
+          <button class="filter-btn" data-category="pediatric">Дитяча стоматологія</button>
+        </div>
+
+        <div class="services-grid" id="services-grid">
+        </div>
+      </section>
+
+      <section class="section appointments-section" id="appointments-section">
+        <h2 class="section-title">Мої записи на прийом</h2>
+        <div id="appointments-list" class="appointments-list">
+          <p class="no-appointments">У вас поки немає активних записів.</p>
+        </div>
+      </section>
+
+      <section class="section tech-section">
+        <h2 class="section-title">Обраний стек технологій</h2>
+        <div class="tech-grid">
+          <div class="tech-card">
+            <span class="tech-badge html">HTML5</span>
+            <p>Семантична та доступна структура вебсторінки.</p>
+          </div>
+          <div class="tech-card">
+            <span class="tech-badge css">CSS3</span>
+            <p>Адаптивна верстка (Flexbox, Grid, CSS Variables, Media Queries).</p>
+          </div>
+          <div class="tech-card">
+            <span class="tech-badge js">JavaScript (ES6+)</span>
+            <p>Динамічна фільтрація, валідація, збереження у localStorage.</p>
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <div class="modal-overlay" id="booking-modal">
+    <div class="modal-content">
+
+      <div class="steps-indicator">
+        <div class="step-item active" data-step="1"><span>1</span> Послуга</div>
+        <div class="step-item" data-step="2"><span>2</span> Лікар</div>
+        <div class="step-item" data-step="3"><span>3</span> Дата/Час</div>
+        <div class="step-item" data-step="4"><span>4</span> Контакти</div>
+      </div>
+
+      <div class="step-content active" id="step-1">
+        <h3>Крок 1: Вибір послуги</h3>
+        <p class="step-desc">Оберіть необхідну процедуру зі списку нижче:</p>
+        <div class="service-selection-grid" id="modal-services-list">
+        </div>
+        <div class="modal-actions">
+          <button class="btn btn-secondary" disabled>Назад</button>
+          <button class="btn btn-primary" id="to-step-2-btn" disabled>Далі</button>
+        </div>
+      </div>
+
+      <div class="step-content" id="step-2">
+        <h3>Крок 2: Вибір лікаря</h3>
+        <p class="step-desc">Оберіть спеціаліста для обраної послуги:</p>
+        <div class="form-group">
+          <label>Лікар:</label>
+          <div class="custom-dropdown" id="custom-doctor-dropdown">
+            <button type="button" class="dropdown-selected" id="dropdown-selected-btn">
+                <span id="selected-doctor-text">-- Оберіть лікаря --</span>
+                <span class="dropdown-arrow">▼</span>
+            </button>
+            <div class="dropdown-menu hidden" id="dropdown-menu-list">
+            </div>
+         </div>
+        </div>
+        <div class="modal-actions">
+          <button class="btn btn-secondary" id="back-to-step-1">Назад</button>
+          <button class="btn btn-primary" id="to-step-3-btn" disabled>Далі</button>
+        </div>
+      </div>
+
+      <div class="step-content" id="step-3">
+        <h3>Крок 3: Вибір дати та часу</h3>
+        <p class="step-desc">Спочатку оберіть дату, а потім доступний час:</p>
+        
+        <div class="date-selection">
+          <h4>Доступні дати:</h4>
+          <div class="dates-buttons" id="dates-container"></div>
+        </div>
+
+        <div class="time-selection hidden" id="time-selection-block">
+          <h4>Доступний час на <span id="selected-date-label"></span>:</h4>
+          <div class="times-buttons" id="times-container"></div>
+        </div>
+
+        <div class="modal-actions">
+          <button class="btn btn-secondary" id="back-to-step-2">Назад</button>
+          <button class="btn btn-primary" id="to-step-4-btn" disabled>Далі</button>
+        </div>
+      </div>
+
+      <div class="step-content" id="step-4">
+        <h3>Крок 4: Контактні дані пацієнта</h3>
+        <p class="step-desc">Введіть ваші дані для підтвердження бронювання:</p>
+        
+        <form id="patient-form">
+          <div class="form-group">
+            <label for="patient-name">ПІБ / Ім'я пацієнта <span class="required">*</span></label>
+            <input type="text" id="patient-name" class="form-control" placeholder="Наприклад: Олена Коваленко">
+            <span class="error-msg" id="name-error">Будь ласка, вкажіть ваше ім'я</span>
+          </div>
+
+          <div class="form-group">
+            <label for="patient-phone">Номер телефону <span class="required">*</span></label>
+            <input type="tel" id="patient-phone" class="form-control" placeholder="+380XXXXXXXXX">
+            <span class="error-msg" id="phone-error">Введіть коректний номер (наприклад, +380971234567)</span>
+          </div>
+
+          <div class="summary-box" id="booking-summary">
+          </div>
+
+          <div class="modal-actions">
+            <button type="button" class="btn btn-secondary" id="back-to-step-3">Назад</button>
+            <button type="submit" class="btn btn-primary" id="submit-booking-btn">Забронювати</button>
+          </div>
+        </form>
+      </div>
+
+    </div>
+  </div>
+
+  <footer class="footer">
+    <div class="container footer-container">
+      <p>Крос-платформне програмування, лабораторна робота № 1.2</p>
+      <p>Тема проєкту: Розробка застосунку для стоматологічної клініки</p>
+      <p>Виконала: Булавіна А.</p>
+    </div>
+  </footer>
+
+</body>
+</html>
